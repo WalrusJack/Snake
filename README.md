@@ -1,2 +1,2 @@
 # Snake
-Simple snake game for linux terminal
+Simple snake game for Linux terminal
