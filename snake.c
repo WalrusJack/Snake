@@ -63,6 +63,21 @@ void moveSnake(int signum) {
 }
 
 // Author: Bruno Francisco
+// Appends to the end of the snake at most 'segNum' amount of segments
+// and returns the new length of the snake
+int addSegments(struct segment *snake, int maxLength, int size, int segNum) {
+    for(int i = 0; i < segNum && i < maxLength; i++) {
+        int prev = size - 1;
+        snake[size].x = snake[prev].x - snake[prev].xDir;       // The current segments position and
+        snake[size].y = snake[prev].y - snake[prev].yDir;       // direction is set to the previous
+        snake[size].xDir = snake[prev].xDir;                    // segments position and direction
+        snake[size].yDir = snake[prev].yDir;
+        size++;                                                 // Increase the length of snake
+    }
+    return size;
+}
+
+// Author: Bruno Francisco
 // Sets a repeating timer of 'time' milliseconds
 // Used to move the snake in after a certain period of time passes
 void setTimer(long time) {
