@@ -1,6 +1,5 @@
 
 #include <curses.h>
-#include <ncurses.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
@@ -15,6 +14,14 @@ struct segment {
     int xDir;           // xDir = 1 --> right, xDir = -1 --> left
     int yDir;           // yDir = 1 --> down, yDir = -1 --> up
 };
+
+WINDOW *window;
+int pitWidth;
+int pitHeight;
+
+struct segment *snake;
+int maxLength;
+int snakeSize;
 
 // Author: Bruno Francisco
 // Moves the snake in the currently set direction
@@ -44,11 +51,11 @@ void moveSnake(int signum) {
     // Check to see if the snake head has collided with the body
     for(int i = 1; i < snakeSize; i++)                      
         if(snake[0].x == snake[i].x && snake[0].y == snake[i].y)
-            gameOver(pitWidth, pitHeight);
+            exit(0);
     
     // Check to see if the snake head has collided with the pit walls
     if(snake[0].x <= 0 || snake[0].x >= pitWidth - 1 || snake[0].y <= 0 || snake[0].y >= pitHeight - 1)
-        gameOver(pitWidth, pitHeight);
+        exit(0)
 
     // Place cursor in a non-intrusive place and update the screen
     move(pitHeight - 1, pitWidth - 1);
