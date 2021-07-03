@@ -1,5 +1,6 @@
 
 #include <curses.h>
+#include <ncurses.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
@@ -68,4 +69,15 @@ void setTimer(long time) {
     timer.it_value.tv_usec = usec;
 
     setitimer(ITIMER_REAL, &timer, NULL);       // Set the timer
+}
+
+// Author: Kobe Onye
+// Draws the border and the background for the snake to move in
+void border(int height, int width)
+{
+    int xMax, yMax;
+    getmaxyx(stdscr, yMax, xMax);
+    WINDOW *board_win = newwin(height, width, (yMax/2) - (height/2), (xMax/2) - (width/2)); // Creates the border 
+    box(board_win, 0, 0);                                                                   // Draws a straight line to be used as the snake border
+    wrefresh(board_win);
 }
