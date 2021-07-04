@@ -166,6 +166,9 @@ void drawSnake(struct segment *snake) {
     // Delete the old tail of the snake
     move(snake[snakeSize - 1].y, snake[snakeSize - 1].x);
     addch(' ');
+    
+    // Place the cursor in a non-invasive place
+    move(pitHeight - 1, pitWidth - 1);
 }
 
 // Author: Bruno Francisco
