@@ -49,7 +49,7 @@ int main() {
     pitHeight = LINES;
 
     // drawBorder(pitWidth, pitHeight);
-    box(window, pitHeight, pitHeight);
+    box(window, 0, 0);
 
     // Initialize the snake
     maxLength = pitWidth + pitHeight;
