@@ -130,12 +130,16 @@ void moveSnake(int signum) {
     
     // Check to see if the snake head has collided with the body
     for(int i = 1; i < snakeSize; i++)                      
-        if(snake[0].x == snake[i].x && snake[0].y == snake[i].y)
+        if(snake[0].x == snake[i].x && snake[0].y == snake[i].y) {
+            endwin();
             exit(0);
+        }
     
     // Check to see if the snake head has collided with the pit walls
-    if(snake[0].x <= 0 || snake[0].x >= pitWidth - 1 || snake[0].y <= 0 || snake[0].y >= pitHeight - 1)
+    if(snake[0].x <= 0 || snake[0].x >= pitWidth - 1 || snake[0].y <= 0 || snake[0].y >= pitHeight - 1) {
+        endwin();
         exit(0);
+    }
 
     // Place cursor in a non-intrusive place and update the screen
     move(pitHeight - 1, pitWidth - 1);
