@@ -20,7 +20,6 @@ void moveSnake(int);
 void drawSnake(struct segment *);
 int addSegments(struct segment *, const int, int, int);
 void setTimer(long);
-void drawBorder(WINDOW *, int, int, int, int);
 
 WINDOW *window;
 int pitWidth;               // Width of the snake pit including the borders
@@ -49,8 +48,8 @@ int main() {
     pitWidth = COLS;
     pitHeight = LINES;
 
-    // drawBorder(pitWidth, pitHeight);
-    drawBorder(window, 0, 0, pitWidth, pitHeight);
+    // Draw a border around the snake pit
+    box(window, 0, 0);
 
     // Initialize the snake
     maxLength = pitWidth + pitHeight;
@@ -203,50 +202,6 @@ void setTimer(long time) {
     timer.it_value.tv_usec = usec;
 
     setitimer(ITIMER_REAL, &timer, NULL);       // Set the timer
-}
-
-// Author: Bruno Francisco
-// Draws a border around 'window' of the specified width and
-// height at the specified position but does not refresh the screen
-void drawBorder(WINDOW *window, int x, int y, int width, int height) {
-    // Characters used to display the vertical and
-    // horizontal borders, as well as the corners
-    const int horiz = '-';
-    const int vert = '|';
-    const int corner = '+';
-    
-    // Draw the top border
-    for(int i = 0; i < width ; i++) {
-        move(y, x + i);
-        addch(horiz);
-    }
-    
-    // Draw the bottom border
-    for(int i = 0; i < width ; i++) {
-        move(y + height - 1, x + i);
-        addch(horiz);
-    }
-    
-    // Draw the left border
-    for(int i = 0; i < height ; i++) {
-        move(y + i, x);
-        addch(vert);
-    }
-    
-    // Draw the right border
-    for(int i = 0; i < height ; i++) {
-        move(y + i, x + width - 1);
-        addch(vert);
-    }
-
-    move(y, x);
-    addch(corner);
-    move(y, x + width - 1);
-    addch(corner);
-    move(y + height - 1, x);
-    addch(corner);
-    move(y + height - 1, x + width - 1);
-    addch(corner);
 }
 
 /* ::UNUSED::
