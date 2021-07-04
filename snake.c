@@ -23,11 +23,49 @@ struct segment *snake;
 int maxLength;
 int snakeSize;
 
+int main() {
+    // Author: Bruno Francisco
+    // Check for user input
+    // If the user presses 'q' or 'Q' the game quits
+    // If the user presses one of the arrow keys, the snakes
+    // direction is changed to reflect the arrow key pressed
+    int quit = false;
+    while(!quit) {
+        int key = getch();
+        switch(key) {
+            case 'Q':                       // 'q' or 'Q' --> quit game
+            case 'q':
+                quit = true;
+                break;
+            case KEY_UP:                    // up arrow key --> snake direction is set to up
+                snake[0].xDir = 0;
+                snake[0].yDir = -1;
+                break;
+            case KEY_DOWN:                  // down arrow key --> snake direction is set to down
+                snake[0].xDir = 0;
+                snake[0].yDir = 1;
+                break;
+            case KEY_LEFT:                  // left arrow key --> snake direction is set to left
+                snake[0].xDir = -1;
+                snake[0].yDir = 0;
+                break;
+            case KEY_RIGHT:                 // right arrow key --> snake direction is set to right
+                snake[0].xDir = 1;
+                snake[0].yDir = 0;
+                break;
+        }
+    }
+}
+
 // Author: Bruno Francisco
 // Moves the snake in the currently set direction
 // and checks for collision between the borders and snake body
 // If collsion is detected, print a game over screen
 void moveSnake(int signum) {
+    // Characters to be used to display the head and body of the snake
+    const int headChar = '#';
+    const int bodyChar = '#';
+    
     // Delete the old tail of the snake
     move(snake[snakeSize - 1].y, snake[snakeSize - 1].x);
     addch(' ');
@@ -36,7 +74,7 @@ void moveSnake(int signum) {
     snake[0].x += snake[0].xDir;
     snake[0].y += snake[0].yDir;
     move(snake[0].y, snake[0].x);
-    addch('#');
+    addch(headChar);
 
     // Update the position and direction of each segment in the snake
     for(int i = snakeSize - 1; i > 0; i--) {
@@ -45,7 +83,7 @@ void moveSnake(int signum) {
         snake[i].xDir = snake[i - 1].xDir;
         snake[i].yDir = snake[i - 1].yDir;
         move(snake[i].y, snake[i].x);
-        addch('#');
+        addch(bodyChar);
     }
 
     // Check to see if the snake head has collided with the body
@@ -66,7 +104,7 @@ void moveSnake(int signum) {
 // Appends to the end of the snake at most 'segNum' amount of segments
 // and returns the new length of the snake
 int addSegments(struct segment *snake, int maxLength, int size, int segNum) {
-    for(int i = 0; i < segNum && i < maxLength; i++) {
+    for(int i = 0; i < segNum && size < maxLength; i++) {
         int prev = size - 1;
         snake[size].x = snake[prev].x - snake[prev].xDir;       // The current segments position and
         snake[size].y = snake[prev].y - snake[prev].yDir;       // direction is set to the previous
