@@ -59,7 +59,7 @@ int main() {
     snake[0].xDir = 1;
     snake[0].yDir = 0;
     int initSize = 5;
-    snakeSize = addSegments(snake, maxLength, 1, initSize - 1);
+    snakeSize = addSegments(snake, maxLength, 1, initSize);
     drawSnake(snake);
     
     // Draw the screen
@@ -131,12 +131,14 @@ void moveSnake(int signum) {
     // Check to see if the snake head has collided with the body
     for(int i = 1; i < snakeSize; i++)                      
         if(snake[0].x == snake[i].x && snake[0].y == snake[i].y) {
+            free(snake);
             endwin();
             exit(0);
         }
     
     // Check to see if the snake head has collided with the pit walls
     if(snake[0].x <= 0 || snake[0].x >= pitWidth - 1 || snake[0].y <= 0 || snake[0].y >= pitHeight - 1) {
+        free(snake);
         endwin();
         exit(0);
     }
@@ -175,7 +177,7 @@ void drawSnake(struct segment *snake) {
 // Appends to the end of the snake at most 'segNum' amount of segments
 // and returns the new length of the snake
 int addSegments(struct segment *snake, int maxLength, int size, int segNum) {
-    for(int i = 0; i < segNum && size < maxLength; i++) {
+    for(int i = 0; i < segNum && size < maxLength - 1; i++) {
         int prev = size - 1;
         snake[size].x = snake[prev].x - snake[prev].xDir;       // The current segments position and
         snake[size].y = snake[prev].y - snake[prev].yDir;       // direction is set to the previous
